@@ -1,3 +1,5 @@
+#!/bin/sh
+
 BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null)
 MSG_FILE=$1
 MSG=$(cat "$MSG_FILE")
