@@ -1,0 +1,15 @@
+BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null)
+MSG_FILE=$1
+MSG=$(cat "$MSG_FILE")
+
+# Extrai o identificador do ticket (ex: HEY-2) do nome da branch
+TICKET=$(echo "$BRANCH" | grep -oE '[A-Z]+-[0-9]+')
+
+if [ -z "$TICKET" ]; then
+  exit 0
+fi
+
+# Evita duplicar o prefixo
+if ! echo "$MSG" | grep -qF "$TICKET"; then
+  echo "$TICKET: $MSG" > "$MSG_FILE"
+fi
